@@ -1,0 +1,299 @@
+---
+const github = {
+  name: '白杳',
+  login: 'baiyao105',
+  bio: '嗯哼?。',
+  avatar: 'https://avatars.githubusercontent.com/u/121741105?v=4',
+  location: 'A cute cat!!!',
+  githubUrl: 'https://github.com/baiyao105',
+};
+---
+
+<div class="about-card">
+  <div class="about-glow" aria-hidden="true"></div>
+
+  <div class="about-header">
+    <div class="about-avatar-wrap" id="avatar-wrap">
+      <!-- floating decorations -->
+      <svg class="float-deco deco-sakura" viewBox="0 0 24 24" fill="var(--pink)" width="18" height="18">
+        <path d="M12 2c-1.5 3-4 5-7 5 1.5 3 4 6 7 9 3-3 5.5-6 7-9-3 0-5.5-2-7-5z"/>
+      </svg>
+      <svg class="float-deco deco-fish" viewBox="0 0 24 24" fill="var(--sky)" width="16" height="16">
+        <path d="M12 16c-4 0-7-2-7-5s3-5 7-5c1.5 0 3 .5 4 1.2V3l3 3-3 3v1.8c-1 .7-2.5 1.2-4 1.2z"/>
+      </svg>
+      <svg class="float-deco deco-tea" viewBox="0 0 24 24" fill="var(--primary)" width="15" height="15">
+        <path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
+      </svg>
+      <svg class="float-deco deco-heart" viewBox="0 0 24 24" fill="var(--heart)" width="14" height="14">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+      </svg>
+
+      <div class="about-avatar-ring">
+        <img
+          src={github.avatar}
+          alt={github.name}
+          class="about-avatar"
+          width="72"
+          height="72"
+          loading="lazy"
+        />
+      </div>
+
+      <!-- cat easter egg bubble -->
+      <div class="cat-bubble" id="cat-bubble">喵~</div>
+    </div>
+
+    <div class="about-info">
+      <h2 class="about-name">{github.name}</h2>
+      <p class="about-bio">{github.bio}</p>
+      <p class="about-loc">
+        <svg class="loc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 2a4 4 0 014 4c0 3-4 6-4 6s-4-3-4-6a4 4 0 014-4z"/>
+          <path d="M5 20c0-4 3.5-7 7-7s7 3 7 7"/>
+        </svg>
+        {github.location}
+      </p>
+    </div>
+  </div>
+
+  <div class="about-links">
+    <a href={github.githubUrl} target="_blank" rel="noopener" class="link-btn link-btn--candy">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15">
+        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+      </svg>
+      <span>GitHub</span>
+    </a>
+  </div>
+</div>
+
+<script>
+  const wrap = document.getElementById('avatar-wrap');
+  const bubble = document.getElementById('cat-bubble');
+  let timeout: ReturnType<typeof setTimeout>;
+
+  wrap?.addEventListener('click', () => {
+    bubble?.classList.add('show');
+    clearTimeout(timeout);
+    timeout = setTimeout(() => bubble?.classList.remove('show'), 1600);
+  });
+</script>
+
+<style>
+  .about-card {
+    position: relative;
+    z-index: 1;
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 32px 36px 28px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    animation: cardIn .8s cubic-bezier(.34,1.56,.64,1) both;
+    animation-delay: .1s;
+    opacity: 0;
+    transition: background .5s, box-shadow .4s, transform .3s;
+    overflow: visible;
+  }
+  .about-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-3px);
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(40px) scale(.93); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .about-glow {
+    position: absolute;
+    top: -40%; left: -20%;
+    width: 140%; height: 80%;
+    background: radial-gradient(ellipse, var(--primary-glow) 0%, transparent 70%);
+    pointer-events: none;
+    opacity: .6;
+    transition: opacity .5s;
+  }
+  .about-card:hover .about-glow { opacity: 1; }
+
+  .about-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    text-align: left;
+    margin-bottom: 22px;
+  }
+
+  /* avatar area */
+  .about-avatar-wrap {
+    position: relative;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  .about-avatar-ring {
+    width: 78px; height: 78px;
+    border-radius: 50%;
+    padding: 3px;
+    position: relative;
+  }
+  .about-avatar-ring::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(
+      var(--primary) 0deg,
+      var(--pink) 90deg,
+      var(--lavender) 180deg,
+      var(--sky) 270deg,
+      var(--primary) 360deg
+    );
+    animation: ringHue 8s linear infinite;
+    z-index: 0;
+  }
+  @keyframes ringHue {
+    from { filter: hue-rotate(0deg); }
+    to   { filter: hue-rotate(360deg); }
+  }
+
+  .about-avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2.5px solid var(--card);
+    display: block;
+    position: relative;
+    z-index: 1;
+    transition: border-color .5s, transform .3s;
+  }
+  .about-avatar-wrap:hover .about-avatar {
+    transform: scale(1.06) rotate(-3deg);
+  }
+
+  /* floating decorations */
+  .float-deco {
+    position: absolute;
+    pointer-events: none;
+    opacity: .7;
+  }
+  .deco-sakura {
+    top: -6px; right: -4px;
+    animation: decoFloat 3s ease-in-out infinite;
+  }
+  .deco-fish {
+    bottom: 2px; left: -12px;
+    animation: decoFloat 3.5s ease-in-out infinite .4s;
+  }
+  .deco-tea {
+    top: 50%; right: -14px;
+    transform: translateY(-50%);
+    animation: decoFloat 2.8s ease-in-out infinite .8s;
+  }
+  .deco-heart {
+    bottom: -4px; right: 8px;
+    animation: decoFloat 3.2s ease-in-out infinite 1.2s;
+  }
+  @keyframes decoFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-5px) rotate(8deg); }
+  }
+
+  /* cat easter egg */
+  .cat-bubble {
+    position: absolute;
+    top: -8px; left: 50%;
+    transform: translateX(-50%) translateY(0) scale(0);
+    background: var(--card);
+    color: var(--primary);
+    font-family: 'Fredoka', sans-serif;
+    font-size: .75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 999px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.1);
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: transform .35s cubic-bezier(.34,1.56,.64,1), opacity .25s;
+    z-index: 10;
+  }
+  .cat-bubble.show {
+    transform: translateX(-50%) translateY(-38px) scale(1);
+    opacity: 1;
+  }
+
+  .about-info { min-width: 0; }
+
+  .about-name {
+    font-family: 'Fredoka', 'Noto Sans SC', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 2px;
+    background: linear-gradient(135deg, var(--text), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .about-bio {
+    font-size: .88rem;
+    color: var(--text-light);
+    font-weight: 300;
+    transition: color .5s;
+  }
+
+  .about-loc {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: .78rem;
+    color: var(--text-muted);
+    margin-top: 5px;
+    transition: color .5s;
+    font-style: italic;
+  }
+  .loc-icon {
+    width: 13px; height: 13px;
+    color: var(--primary);
+    flex-shrink: 0;
+  }
+
+  /* capsule candy button */
+  .about-links {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .link-btn--candy {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--text);
+    text-decoration: none;
+    font-size: .82rem;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    transition: transform .2s, background .2s;
+  }
+  .link-btn--candy:hover {
+    background: var(--accent);
+    transform: translateY(-1px);
+  }
+  .link-btn--candy svg {
+    width: 14px; height: 14px;
+    flex-shrink: 0;
+    color: var(--primary);
+  }
+
+  @media (max-width: 480px) {
+    .about-card { padding: 26px 22px 22px; }
+    .about-header { gap: 14px; }
+    .about-avatar-ring { width: 66px; height: 66px; }
+    .about-avatar { width: 60px; height: 60px; }
+    .link-btn--candy { padding: 9px 22px; font-size: .8rem; }
+  }
+</style>

@@ -1,0 +1,37 @@
+---
+interface Props {
+  /** Position: top-left, top-right, bottom-left, bottom-right */
+  position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+  size?: number;
+}
+
+const { position = 'top-right', size = 20 } = Astro.props;
+
+const posStyles: Record<string, string> = {
+  'top-left':    'top: -6px; left: -6px;',
+  'top-right':   'top: -6px; right: -6px;',
+  'bottom-left': 'bottom: -6px; left: -6px;',
+  'bottom-right':'bottom: -6px; right: -6px;',
+};
+---
+
+<span class="sparkle" style={`${posStyles[position]}; --size: ${size}px;`}>
+  <svg viewBox="0 0 24 24" fill="var(--primary)" width={size} height={size}>
+    <path d="M12 0l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z"/>
+  </svg>
+</span>
+
+<style>
+  .sparkle {
+    position: absolute;
+    pointer-events: none;
+    animation: sparkleFloat 2.4s ease-in-out infinite;
+    opacity: .7;
+  }
+  @keyframes sparkleFloat {
+    0%, 100% { transform: rotate(0deg) scale(1); opacity: .7; }
+    25%      { transform: rotate(15deg) scale(1.15); opacity: 1; }
+    50%      { transform: rotate(0deg) scale(1); opacity: .7; }
+    75%      { transform: rotate(-15deg) scale(1.1); opacity: .9; }
+  }
+</style>

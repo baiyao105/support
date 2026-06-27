@@ -1,0 +1,451 @@
+---
+import Sparkle from './Sparkle.astro';
+import thanksData from '../data/thanks.json';
+
+interface Props {
+  textPairs?: Array<{ title: string; subtitle: string }>;
+  qrTip?: string;
+  footer?: string;
+}
+
+const {
+  textPairs = [
+    { title: '野生杳杳出现了！', subtitle: '投喂奶茶可提升好感度' },
+    { title: '大杳杳正在写代码', subtitle: 'HP 需要奶茶恢复' },
+    { title: '获得 Buff', subtitle: '奶茶之力 · 持续一整天' },
+    { title: '你投掷了一杯奶茶', subtitle: '效果拔群！' },
+    { title: '喵呜~检测到访客', subtitle: '要不要投喂一下呀' },
+    { title: '赞赏不会让 Bug 消失', subtitle: '但会让作者开心很多哦' },
+    { title: '代码和奶茶', subtitle: '总得有一个是甜的' },
+    { title: '发现一只杳杳', subtitle: '正在发呆中 ✨' },
+    { title: '欢迎来到', subtitle: '小小杳的小角落 ♡' },
+    { title: '这里有一只', subtitle: '正在摸鱼的小猫' },
+    { title: '获得成就', subtitle: '来到这里' },
+    { title: '获得道具', subtitle: '好奇心 × 1' },
+    { title: '谢谢你', subtitle: '愿意停下来看看哦' },
+  ],
+  qrTip = '谢谢你的投喂w ♡',
+  footer = '感谢喜欢，能帮到忙我就很高兴啦!',
+} = Astro.props;
+
+const randomPair = textPairs[Math.floor(Math.random() * textPairs.length)];
+---
+
+<div class="card">
+  <Sparkle position="top-right" size={18} />
+  <Sparkle position="bottom-left" size={14} />
+
+  <!-- milk tea icon -->
+  <div class="card-icon">
+    <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Cup body -->
+      <path d="M8 10h16v14a4 4 0 01-4 4h-8a4 4 0 01-4-4V10z"/>
+      <!-- Cup rim -->
+      <path d="M6 10h20"/>
+      <!-- Straw -->
+      <path d="M13 6c0-1.5 1-3 3-3s3 1.5 3 3"/>
+      <!-- Heart steam -->
+      <path class="steam-heart sh1" d="M13 2c-.8 1.2-2 2-2 3.2a2.2 2.2 0 004 0c0-1.2-1.2-2-2-3.2z" fill="var(--heart)" stroke="none" opacity=".5"/>
+      <path class="steam-heart sh2" d="M19 3c-.8 1.2-2 2-2 3.2a2.2 2.2 0 004 0c0-1.2-1.2-2-2-3.2z" fill="var(--heart)" stroke="none" opacity=".4"/>
+      <path class="steam-heart sh3" d="M16 1c-.8 1.2-2 2-2 3.2a2.2 2.2 0 004 0c0-1.2-1.2-2-2-3.2z" fill="var(--heart)" stroke="none" opacity=".35"/>
+    </svg>
+  </div>
+
+  <!-- clickable random title -->
+  <div class="title-wrapper" id="title-wrapper" title="点击切换文案">
+    <h1 class="title-btn" id="title-btn">{randomPair.title}</h1>
+    <span class="title-hint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polygon points="10 8 16 12 10 16 10 8"></polygon>
+      </svg>
+    </span>
+  </div>
+  <p class="subtitle" id="subtitle">{randomPair.subtitle}</p>
+
+  <div class="qr-polaroid">
+    <div class="polaroid-tape" aria-hidden="true"></div>
+    <div class="qr-inner">
+      <div class="qr-label">
+        <svg class="qr-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+        扫一扫 · 微信赞赏
+      </div>
+      <div class="qr-frame">
+        <img
+          src="/qr.webp"
+          alt="微信赞赏码"
+          class="qr-img"
+          width="160"
+          height="160"
+          loading="lazy"
+          draggable="false"        />
+        <img
+          src="https://avatars.githubusercontent.com/u/121741105?v=4"
+          alt="白杳"
+          class="qr-avatar"
+          width="52"
+          height="52"
+          loading="lazy"
+          draggable="false"
+        />
+        <!-- hover thank you bubble -->
+        <div class="qr-thanks">谢谢投喂www</div>
+      </div>
+      <div class="qr-tips">{qrTip}</div>
+    </div>
+  </div>
+
+  <div class="thanks-counter">
+    <svg viewBox="0 0 24 24" fill="var(--heart)" width="14" height="14" class="heart-icon">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    </svg>
+    <span>已有 <strong class="count-number" data-count={thanksData.count}>{thanksData.count}</strong> 人投喂</span>
+  </div>
+
+  <p class="footnote" set:html={footer} />
+</div>
+
+<script>
+  const allPairs = [
+    { title: '野生杳杳出现了！', subtitle: '投喂奶茶可提升好感度' },
+    { title: '大杳杳正在写代码', subtitle: 'HP 需要奶茶恢复' },
+    { title: '获得 Buff', subtitle: '奶茶之力 · 持续一整天' },
+    { title: '你投掷了一杯奶茶', subtitle: '效果拔群！' },
+    { title: '喵呜~检测到访客', subtitle: '要不要投喂一下呀' },
+    { title: '赞赏不会让 Bug 消失', subtitle: '但会让作者开心很多哦' },
+    { title: '代码和奶茶', subtitle: '总得有一个是甜的' },
+    { title: '发现一只杳杳', subtitle: '正在发呆中 ✨' },
+    { title: '欢迎来到', subtitle: '小小杳的小角落 ♡' },
+    { title: '这里有一只', subtitle: '正在摸鱼的小猫' },
+    { title: '获得成就', subtitle: '来到这里' },
+    { title: '获得道具', subtitle: '好奇心 × 1' },
+    { title: '谢谢你', subtitle: '愿意停下来看看哦' },
+  ];
+
+  const titleBtn = document.getElementById('title-btn');
+  const subtitleEl = document.getElementById('subtitle');
+  const titleWrapper = document.getElementById('title-wrapper');
+  let idx = 0;
+
+  const animateChange = () => {
+    if (titleBtn) {
+      titleBtn.style.transition = 'transform .15s, opacity .15s';
+      titleBtn.style.transform = 'scale(.95) translateY(-3px)';
+      titleBtn.style.opacity = '0';
+    }
+    if (subtitleEl) {
+      subtitleEl.style.transition = 'transform .15s, opacity .15s';
+      subtitleEl.style.transform = 'scale(.95)';
+      subtitleEl.style.opacity = '0';
+    }
+    
+    setTimeout(() => {
+      idx = (idx + 1) % allPairs.length;
+      if (titleBtn) titleBtn.textContent = allPairs[idx].title;
+      if (subtitleEl) subtitleEl.textContent = allPairs[idx].subtitle;
+      
+      requestAnimationFrame(() => {
+        if (titleBtn) {
+          titleBtn.style.transform = 'scale(1.02) translateY(0)';
+          titleBtn.style.opacity = '1';
+        }
+        if (subtitleEl) {
+          subtitleEl.style.transform = 'scale(1)';
+          subtitleEl.style.opacity = '1';
+        }
+        setTimeout(() => {
+          if (titleBtn) titleBtn.style.transform = 'scale(1)';
+        }, 150);
+      });
+    }, 150);
+  };
+
+  titleWrapper?.addEventListener('click', animateChange);
+</script>
+
+<style>
+  .card {
+    position: relative;
+    z-index: 1;
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 44px 40px 36px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    animation: cardIn .8s cubic-bezier(.34,1.56,.64,1) both;
+    animation-delay: .25s;
+    opacity: 0;
+    transition: background .5s, box-shadow .4s, transform .3s;
+    overflow: visible;
+  }
+  .card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-3px);
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(40px) scale(.93); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* milk tea icon */
+  .card-icon {
+    width: 68px; height: 68px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    position: relative;
+    transition: background .5s, transform .3s;
+  }
+  .card-icon:hover { transform: scale(1.08) rotate(-3deg); }
+  .card-icon svg {
+    width: 34px; height: 34px;
+    color: var(--primary);
+    transition: color .5s;
+  }
+
+  /* heart steam */
+  .steam-heart {
+    animation: heartFloat 2.5s ease-in-out infinite;
+  }
+  .sh1 { animation-delay: 0s; }
+  .sh2 { animation-delay: .7s; }
+  .sh3 { animation-delay: 1.4s; }
+  @keyframes heartFloat {
+    0%   { transform: translateY(0) scale(1); opacity: .7; }
+    50%  { transform: translateY(-6px) scale(1.2); opacity: 0.9; }
+    100% { transform: translateY(-12px) scale(.6); opacity: 0; }
+  }
+
+  /* clickable title */
+  .title-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    position: relative;
+  }
+  .title-hint {
+    position: absolute;
+    left: 100%;
+    margin-left: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    color: var(--text-muted);
+    opacity: 0.5;
+    transition: opacity .3s, transform .3s, color .3s;
+    cursor: pointer;
+  }
+  .title-wrapper:hover .title-hint {
+    opacity: 1;
+    color: var(--primary);
+    transform: translateX(2px);
+  }
+  .title-hint svg {
+    width: 16px;
+    height: 16px;
+  }
+  .title-btn {
+    font-family: 'Fredoka', 'Noto Sans SC', sans-serif;
+    font-weight: 700;
+    font-size: 1.45rem;
+    cursor: pointer;
+    transition: color .3s, transform .2s;
+    user-select: none;
+    line-height: 1.2;
+  }
+  .title-wrapper:hover .title-btn { color: var(--primary); }
+  .title-wrapper:active .title-btn { transform: scale(.97); }
+
+  .subtitle {
+    color: var(--text-light);
+    font-size: .88rem;
+    font-weight: 300;
+    margin-bottom: 26px;
+    line-height: 1.7;
+    transition: color .5s, transform .15s, opacity .15s;
+    min-height: 2.6em;
+  }
+
+  /* polaroid sticker QR */
+  .qr-polaroid {
+    position: relative;
+    background: var(--card);
+    border-radius: var(--radius-sm);
+    padding: 14px 14px 18px;
+    margin-bottom: 18px;
+    box-shadow:
+      0 2px 8px rgba(0,0,0,.06),
+      0 8px 24px rgba(0,0,0,.04),
+      inset 0 0 0 1px var(--border);
+    transform: rotate(-1.5deg);
+    transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .3s;
+  }
+  .qr-polaroid:hover {
+    transform: rotate(0deg) scale(1.02);
+    box-shadow:
+      0 4px 16px rgba(0,0,0,.08),
+      0 12px 32px rgba(0,0,0,.06),
+      inset 0 0 0 1px var(--border);
+  }
+
+  /* tape strip */
+  .polaroid-tape {
+    position: absolute;
+    top: -8px; left: 50%;
+    transform: translateX(-50%) rotate(2deg);
+    width: 60px; height: 20px;
+    background: rgba(255, 224, 178, .6);
+    border-radius: 2px;
+    z-index: 2;
+  }
+
+  .qr-inner {
+    background: var(--qr-bg);
+    border-radius: 12px;
+    padding: 16px;
+    transition: background .5s;
+  }
+
+  .qr-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: .8rem;
+    color: var(--text-light);
+    margin-bottom: 12px;
+    transition: color .5s;
+  }
+  .qr-label-icon {
+    width: 15px; height: 15px;
+    color: var(--primary);
+  }
+
+  /* QR frame */
+  .qr-frame {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    border: 2px solid var(--border);
+    position: relative;
+    transition: transform .4s cubic-bezier(.34,1.56,.64,1), border-color .5s, background .5s, box-shadow .3s;
+  }
+  .qr-frame:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 0 3px var(--primary-glow);
+  }
+
+  .qr-img {
+    position: absolute;
+    inset: 12px;
+    width: calc(100% - 24px);
+    height: calc(100% - 24px);
+    object-fit: contain;
+    transition: opacity .5s;
+  }
+
+  .qr-avatar {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    z-index: 2;
+    user-select: none;
+  }
+
+  /* hover thank you bubble */
+  .qr-thanks {
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--primary);
+    color: #fff;
+    font-family: 'Fredoka', sans-serif;
+    font-size: .75rem;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 999px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: transform .4s cubic-bezier(.34,1.56,.64,1), opacity .3s;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(255,138,101,.3);
+  }
+  .qr-frame:hover .qr-thanks {
+    transform: translateX(-50%) translateY(-42px);
+    opacity: 1;
+  }
+
+  .qr-tips {
+    margin-top: 12px;
+    font-size: .76rem;
+    color: var(--primary);
+    font-weight: 500;
+  }
+
+  /* thanks counter */
+  .thanks-counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .8rem;
+    color: var(--text-light);
+    margin-bottom: 6px;
+    transition: color .5s;
+  }
+  .heart-icon {
+    animation: heartBeat 1.5s ease-in-out infinite;
+  }
+  @keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    14% { transform: scale(1.1); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.1); }
+    70% { transform: scale(1); }
+  }
+  .count-number {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1rem;
+    display: inline-block;
+    animation: countPop .8s cubic-bezier(.34,1.56,.64,1);
+    animation-delay: .8s;
+  }
+  @keyframes countPop {
+    0% { transform: scale(.5); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .footnote {
+    font-size: .72rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    transition: color .5s;
+  }
+
+  @media (max-width: 480px) {
+    .card { padding: 32px 24px 28px; }
+    .qr-frame { width: 156px; height: 156px; }
+    .qr-polaroid { padding: 10px 10px 14px; }
+  }
+</style>

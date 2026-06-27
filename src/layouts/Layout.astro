@@ -1,0 +1,113 @@
+---
+interface Props {
+  title?: string;
+}
+
+const { title = 'Sponsors' } = Astro.props;
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧋</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #fdf6f0;
+    --bg-sub: #fff8f2;
+    --card: #ffffff;
+    --primary: #ff8a65;
+    --primary-dark: #f47b4b;
+    --primary-glow: rgba(255, 138, 101, .15);
+    --accent: #ffe0b2;
+    --accent-soft: #fff0e0;
+    --pink: #ffcdd2;
+    --mint: #c8e6c9;
+    --lavender: #e1bee7;
+    --sky: #b3e5fc;
+    --text: #4a3728;
+    --text-light: #8d7565;
+    --text-muted: #b8a090;
+    --shadow: 0 8px 32px rgba(120, 80, 50, 0.08);
+    --shadow-hover: 0 16px 48px rgba(120, 80, 50, 0.16);
+    --shadow-float: 0 20px 60px rgba(120, 80, 50, 0.12);
+    --radius: 28px;
+    --radius-sm: 16px;
+    --border: #f0e0d0;
+    --qr-bg: linear-gradient(145deg, #fff8f2, #fff0e6);
+    --heart: #ff6b6b;
+    --tag-bg: #ffe0b2;
+    --tag-text: #4a3728;
+    --bubble-opacity: .4;
+    --grain-opacity: .018;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #18100e;
+      --bg-sub: #1e1614;
+      --card: #231c18;
+      --primary: #ff9a76;
+      --primary-dark: #ffb092;
+      --primary-glow: rgba(255, 154, 118, .12);
+      --accent: #3a2c22;
+      --accent-soft: #2c221c;
+      --pink: #4a2828;
+      --mint: #2a3e2a;
+      --lavender: #3a2840;
+      --sky: #1e3040;
+      --text: #f0e0d4;
+      --text-light: #b8a090;
+      --text-muted: #7a6658;
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+      --shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.5);
+      --shadow-float: 0 20px 60px rgba(0, 0, 0, 0.4);
+      --border: #3a2c22;
+      --qr-bg: linear-gradient(145deg, #2c221c, #261e1a);
+      --heart: #ff7a7a;
+      --tag-bg: #3a2c22;
+      --tag-text: #f0e0d4;
+      --bubble-opacity: .22;
+      --grain-opacity: .03;
+    }
+  }
+
+  body {
+    font-family: 'Noto Sans SC', 'Fredoka', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    overflow-x: hidden;
+    transition: background .5s ease, color .5s ease;
+    position: relative;
+  }
+
+  .grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    opacity: var(--grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px;
+  }
+</style>

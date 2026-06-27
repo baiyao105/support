@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Bubbles from '../components/Bubbles.astro';
+import AboutMe from '../components/AboutMe.astro';
+import SponsorsCard from '../components/SponsorsCard.astro';
+---
+
+<Layout title="支持我 · Sponsors">
+  <Bubbles />
+  <div class="stack">
+    <AboutMe />
+    <SponsorsCard />
+  </div>
+</Layout>
+
+<style>
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    width: 100%;
+    max-width: 420px;
+    align-items: center;
+  }
+</style>
