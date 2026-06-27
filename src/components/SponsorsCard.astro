@@ -75,7 +75,7 @@ const randomPair = textPairs[Math.floor(Math.random() * textPairs.length)];
       </div>
       <div class="qr-frame">
         <img
-          src="/qr.webp"
+          src={`${Astro.url.pathname}qr.webp`}
           alt="微信赞赏码"
           class="qr-img"
           width="160"
